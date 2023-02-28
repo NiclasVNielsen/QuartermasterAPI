@@ -8,10 +8,13 @@ const boardRoutes = require("./routes/boards")
 app.use("/api/boards", boardRoutes)
 
 const projectRoutes = require("./routes/projects")
-app.use("/api/boards", projectRoutes)
+app.use("/api/projects", projectRoutes)
 
 const companyRoutes = require("./routes/companies")
-app.use("/api/boards", companyRoutes)
+app.use("/api/companies", companyRoutes)
 
 const userRoutes = require("./routes/users")
-app.use("/api/boards", userRoutes)
+app.use("/api/users", userRoutes)
+
+const authRoutes = require("./routes/auth")
+app.use("/api/auth", authRoutes)
