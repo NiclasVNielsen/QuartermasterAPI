@@ -7,6 +7,7 @@ const app = express()
 
 require("dotenv-flow").config()
 
+app.use(bodyParser.json())
 
 //? Routes
 import("./router.js")
