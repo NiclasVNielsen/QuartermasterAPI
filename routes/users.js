@@ -2,10 +2,11 @@ const router = require("express").Router()
 const user = require("../models/user")
 const error404 = require("../errors/404")
 const error500 = require("../errors/500")
+const { verifyToken } = require("../validation/token")
 
 //? Create
 // /api/users/ - post
-router.post("/", (req, res) => {
+router.post("/", verifyToken, (req, res) => {
     data = req.body
     user.insertMany(data)
     .then(data => res.send(data))
@@ -15,7 +16,7 @@ router.post("/", (req, res) => {
 //? Read
 // Read all
 // /api/users/ - get
-router.get("/", (req, res) => {
+router.get("/", verifyToken, (req, res) => {
     user.find()
     .then(data => res.send(data))
     .catch(error => error500(res, error))
@@ -24,7 +25,7 @@ router.get("/", (req, res) => {
 
 // Read by ID
 // /api/users/:id - get
-router.get("/:id", (req, res) => {
+router.get("/:id", verifyToken, (req, res) => {
     user.findById(req.params.id)
     .then(data => res.send(data))
     .catch(error => error500(res, error))
@@ -34,7 +35,7 @@ router.get("/:id", (req, res) => {
 //? Update
 //! Wrong id shoots a 500 and not 404
 // /api/users/:id - put
-router.put("/:id", (req, res) => {
+router.put("/:id", verifyToken, (req, res) => {
     const id = req.params.id
 
     user.findByIdAndUpdate(id, req.body)
@@ -51,7 +52,7 @@ router.put("/:id", (req, res) => {
 //? Delete
 //! Wrong id shoots a 500 and not 404
 // /api/users/:id - delete
-router.delete("/:id", (req, res) => {
+router.delete("/:id", verifyToken, (req, res) => {
     const id = req.params.id
 
     user.findByIdAndDelete(id)

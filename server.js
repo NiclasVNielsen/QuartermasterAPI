@@ -9,6 +9,15 @@ require("dotenv-flow").config()
 
 app.use(bodyParser.json())
 
+
+//? Swagger
+const swaggerUi = require("swagger-ui-express")
+const YAML = require("yamljs")
+
+const swaggerDefinition = YAML.load('./swagger.yaml')
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition))
+
+
 //? Routes
 import("./router.js")
 

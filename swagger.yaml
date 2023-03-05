@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: MEN REST API
+  description: MongoDB ExpressJS NodeJS REST API
+  version: 1.0.0
+servers:
+  - url: http://localhost:4000/api/
+    description: Localhost development server
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: auth-token
+
+  schemas:
+    Boards:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        lanes:
+          type: object
+
+    Companies:
+      type: object
+      properties:
+        id:
+          type: string
+        projects:
+          type: array
+        employees:
+          type: array
+
+    Projects:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        boards:
+          type: array
+    
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+paths:
+
+  /auth/register:
+    post:
+      summary: Register a new User
+      description: Register a new User in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+
+      responses:
+        201:
+          description: User created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  _id:
+                    type: string
+
+  /auth/login:
+    post:
+      summary: Login a User
+      description: Login a User in order to get JWT token (auth-token)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      
+      responses:
+        200:
+          description: User logged in succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  data:
+                    type: string
+
+
+  /boards:
+    get:
+      summary: Retrieves a list of boards
+      description: Retrieves a list of boards as JSON objects.
+      responses:
+        200:
+          description: A list of boards JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Boards"
+    
+    post:
+      summary: Create a new board
+      description: Create a new board
+      security:
+        - ApiKeyAuth: []      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Boards"
+
+      responses:
+        201:
+          description: Board created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Boards"
+  
+  /boards/{id}:
+    get:
+      summary: Specific board
+      description: Retrieves a specific board based on it id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200:
+          description: A board in the format of a JSON object.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Boards"
+   
+    put:
+      summary: Updates a specific board
+      description: Updates a specific board based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Boards"
+
+      responses:
+        201:
+          description: Product updated succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Boards"
+
+    delete:
+      summary: Deletes a specific board
+      description: Deletes a specific board based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string      
+
+      responses:
+        201:
+          description: Board deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Boards"
