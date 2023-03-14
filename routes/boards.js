@@ -3,6 +3,8 @@ const board = require("../models/board")
 const error404 = require("../errors/404")
 const error500 = require("../errors/500")
 const { verifyToken } = require("../validation/token")
+const mongoose = require("mongoose")
+
 
 //? Create
 // /api/boards/ - post
@@ -16,7 +18,7 @@ router.post("/", verifyToken, (req, res) => {
 //? Read
 // Read all
 // /api/boards/ - get
-router.get("/", verifyToken, (req, res) => {
+router.get("/" , (req, res) => {
     board.find()
     .then(data => res.send(data))
     .catch(error => error500(res, error))
@@ -50,18 +52,28 @@ router.get("/:id", verifyToken, (req, res) => {
 //? Update
 //! Wrong id shoots a 500 and not 404
 // /api/boards/:id - put
-router.put("/:id", verifyToken, (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id
+ 
+   console.log(mongoose.Types.ObjectId.isValid(id));
 
-    board.findByIdAndUpdate(id, req.body)
-    .then(data => {
-        if(!data){
-            error404(res, { message: "Board not found" })
-        }else{
+    board.findById(id)
+    .then(x => {
+        //if (!x empty)
+        //board.updateOne(req.body)
+        board.findByIdAndUpdate(id, req.body)
+        .then(data => {
             res.send({ message: "Wohoo! it worked! ^^" })
-        }
+        })
+        .catch(error => 
+        {
+            error500(res, { message: "This does not exist: " + id + " 3:" })
+        });
+        //else error404(res, error)
     })
     .catch(error => error500(res, { message: "This does not exist: " + id + " 3:" }))
+
+    
 })
 
 //? Delete
