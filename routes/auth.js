@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
     // Register in DB
     try {
         const savedUser = await newUser.save()
-        res.json({ error: null, data: savedUser._id })
+        res.status(201).json({ error: null, data: savedUser._id })
     } catch (error) {
         res.status(400).json({ error })
     }
@@ -82,6 +82,9 @@ router.post("/login", async (req, res) => {
         data: { token }
     })
 })
+
+
+//? Resign Token
 
 
 module.exports = router
