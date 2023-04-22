@@ -34,6 +34,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.0",
+    "passport-local-mongoose": "^5.0.0",
+    "mongodb-core": "^3.2.7",
     "swagger-ui-express": "^4.6.2",
     "yamljs": "^0.3.0"
   },
