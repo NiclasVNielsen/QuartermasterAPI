@@ -29,6 +29,6 @@ jobs:
           npm install
           npm test
         env:
-          DBHOST: ${{ secret.DBHOST }}
-          TOKEN_SECRET: ${{ secret.TOKEN_SECRET }}
-          TOKEN_EXPIRATION: ${{ secret.TOKEN_EXPIRATION }}
+          DBHOST: ${{ secrets.DBHOST }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+          TOKEN_EXPIRATION: ${{ secrets.TOKEN_EXPIRATION }}
