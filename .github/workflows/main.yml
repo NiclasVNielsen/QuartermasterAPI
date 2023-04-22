@@ -15,12 +15,12 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: use Node.JS ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -39,13 +39,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Deploy to production
+        uses: quartermasterapi/render-deploy-action@v0.0.8
         with:
-          fetch-depth: 0
-
-      - name: Add remote origin to render 
-        run: git remote add render https://quartermasterapi.onrender.com/
-
-      - name: Deploy code to render
-        run: git push render master
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ RENDER_API_KEY }}
