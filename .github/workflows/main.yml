@@ -32,3 +32,20 @@ jobs:
           DBHOST: ${{ secrets.DBHOST }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           TOKEN_EXPIRATION: ${{ secrets.TOKEN_EXPIRATION }}
+
+  deploy:
+    name: Deploy
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Add remote origin to render 
+        run: git remote add render https://quartermasterapi.onrender.com/
+
+      - name: Deploy code to render
+        run: git push render master
