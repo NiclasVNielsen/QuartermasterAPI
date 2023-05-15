@@ -96,7 +96,7 @@ describe('/First test collection', () => {
                 .post('/api/boards/')
                 .send({
                     title: "Smoops",
-                    lanes: {}
+                    board: []
                 })
                 .set('auth-token', resToken.body.data.token)
                 .end((err, res) => {
