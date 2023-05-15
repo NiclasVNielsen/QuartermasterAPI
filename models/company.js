@@ -3,7 +3,10 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 let companiesSchema = new Schema({
-    title: {type: String},
+    title: {
+        type: String,
+        require: true
+    },
     projects: {
         type: Array,
         require: true

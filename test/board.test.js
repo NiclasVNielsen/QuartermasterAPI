@@ -11,7 +11,8 @@ describe('/First test collection', () => {
     const user = {
         name: "Meepers",
         email: "meep@moop.mp",
-        password: "12345678"
+        password: "12345678",
+        personalBoards: []
     }
 
     it('Creates test user', (done) => {

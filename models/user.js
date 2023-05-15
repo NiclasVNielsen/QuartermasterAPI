@@ -1,3 +1,4 @@
+const { array } = require("joi")
 const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
@@ -20,6 +21,10 @@ let usersSchema = new Schema({
         require: true,
         min: 8,
         max: 255
+    },
+    personalBoards: {
+        type: array,
+        require: true
     }
 })
 
