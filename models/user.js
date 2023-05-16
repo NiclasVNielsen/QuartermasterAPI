@@ -23,7 +23,7 @@ let usersSchema = new Schema({
         max: 255
     },
     personalBoards: {
-        type: array,
+        type: Array,
         require: true
     }
 })

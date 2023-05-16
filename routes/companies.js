@@ -6,7 +6,7 @@ const { verifyToken } = require("../validation/token")
 
 //? Create
 // /api/companies/ - post
-router.post("/", verifyToken, (req, res) => {
+router.post("/", (req, res) => {
     data = req.body
     company.insertMany(data)
     .then(data => res.send(data))
@@ -16,7 +16,7 @@ router.post("/", verifyToken, (req, res) => {
 //? Read
 // Read all
 // /api/companies/ - get
-router.get("/", verifyToken, (req, res) => {
+router.get("/", (req, res) => {
     company.find()
     .then(data => res.send(data))
     .catch(error => error500(res, error))
