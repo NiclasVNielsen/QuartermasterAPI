@@ -49,7 +49,7 @@ router.put("/:id", (req, res) => {
         console.log(req.body.json())
         board.findByIdAndUpdate(id, req.body.json())
         .then(data => {
-            res.send({ message: "Wohoo! it worked! ^^" + req.body.json() })
+            res.send({ message: "Wohoo! it worked! ^^", "reqbody": req.body, "reqbodyjson": req.body.json() })
         })
         .catch(error => 
         {
