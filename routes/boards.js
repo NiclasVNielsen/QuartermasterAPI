@@ -45,11 +45,9 @@ router.put("/:id", (req, res) => {
     .then(x => {
         //if (!x empty)
         //board.updateOne(req.body)
-        console.log(id)
-        console.log(req.body.json())
         board.findByIdAndUpdate(id, req.body)
         .then(data => {
-            res.send({ message: "Wohoo! it worked! ^^", "reqbody": req.body, "reqbodyjson": req.body.json() })
+            res.send({ message: "Wohoo! it worked! ^^" })
         })
         .catch(error => 
         {
