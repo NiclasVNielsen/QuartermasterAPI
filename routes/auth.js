@@ -48,6 +48,7 @@ router.post("/register", async (req, res) => {
 // /api/auth/login/ - post
 router.post("/login", async (req, res) => {
     // Checks for errors
+
     const { error } = loginValidation(req.body)
     
     // Correctly filled out form?
