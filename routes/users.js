@@ -31,6 +31,16 @@ router.get("/:id", verifyToken, (req, res) => {
     .catch(error => error500(res, error))
 })
 
+// Read by email
+// /api/users/email/:email - get
+router.get("/email/:email", verifyToken, (req, res) => {
+    user.findById({
+        email: req.params.email
+    })
+    .then(data => res.send(data))
+    .catch(error => error500(res, error))
+})
+
 
 //? Update
 //! Wrong id shoots a 500 and not 404
