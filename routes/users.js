@@ -37,7 +37,10 @@ router.get("/email/:email", verifyToken, (req, res) => {
     user.findById({
         email: req.params.email
     })
-    .then(data => res.send(data))
+    .then(data => {
+        console.log(data)
+        res.send(data)
+    })
     .catch(error => error500(res, error))
 })
 
