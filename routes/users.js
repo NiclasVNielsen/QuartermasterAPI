@@ -23,20 +23,25 @@ router.get("/", verifyToken, (req, res) => {
 })
 
 
-// Read by ID
-// /api/users/:id - get
-router.get("/:id", verifyToken, (req, res) => {
-    user.findById(req.params.id)
-    .then(data => res.send(data))
-    .catch(error => error500(res, error))
-})
-
 // Read by email
 // /api/users/email/:email - get
 router.get("/email/:email", verifyToken, (req, res) => {
+    console.log("// /api/users/email/:email - get")
     user.findById({
         email: req.params.email
     })
+    .then(data => {
+        res.send(data.json())
+    })
+    .catch(error => error500(res, error))
+})
+
+
+// Read by ID
+// /api/users/:id - get
+router.get("/:id", verifyToken, (req, res) => {
+    console.log("// /api/users/:id - get")
+    user.findById(req.params.id)
     .then(data => {
         console.log(data)
         res.send(data)
