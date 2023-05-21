@@ -46,12 +46,12 @@ router.get("/:id", verifyToken, (req, res) => {
 router.put("/:id", (req, res) => {
     const id = req.params.id
  
-    console.log(mongoose.Types.ObjectId.isValid(id));
+    console.log(req.params.id)
 
     board.findById(id)
     .then(x => {
         //if (!x empty)
-        board.updateOne(req.body)
+        board.findByIdAndUpdate(id, req.body)
         .then(data => {
             res.send({ message: "Wohoo! it worked! ^^" })
         })
