@@ -26,12 +26,13 @@ router.get("/", verifyToken, (req, res) => {
 // Read by email
 // /api/users/email/:email - get
 router.get("/email/:email", verifyToken, (req, res) => {
-    console.log("// /api/users/email/:email - get")
-    user.findById({
+    console.log(req.params.email)
+    user.findOne({
         email: req.params.email
-    })
+    }).lean()
     .then(data => {
-        res.send(data.json())
+        data.password = "Nope!"
+        res.send({data})
     })
     .catch(error => error500(res, error))
 })
@@ -43,7 +44,7 @@ router.get("/:id", verifyToken, (req, res) => {
     console.log("// /api/users/:id - get")
     user.findById(req.params.id)
     .then(data => {
-        console.log(data)
+        data.password = "Nope!"
         res.send(data)
     })
     .catch(error => error500(res, error))

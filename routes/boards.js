@@ -24,6 +24,13 @@ router.get("/" , (req, res) => {
     .catch(error => error500(res, error))
 })
 
+//? Read by ID
+// /api/boards/user/:id - get
+router.get("/user/:id", verifyToken, (req, res) => {
+    board.find({ members: req.params.id})
+    .then(data => res.send(data))
+    .catch(error => error500(res, error))
+})
 
 //? Read by ID
 // /api/boards/:id - get
