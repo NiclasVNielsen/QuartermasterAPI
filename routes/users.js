@@ -26,7 +26,6 @@ router.get("/", verifyToken, (req, res) => {
 // Read by email
 // /api/users/email/:email - get
 router.get("/email/:email", verifyToken, (req, res) => {
-    console.log(req.params.email)
     user.findOne({
         email: req.params.email
     }).lean()
@@ -41,7 +40,6 @@ router.get("/email/:email", verifyToken, (req, res) => {
 // Read by ID
 // /api/users/:id - get
 router.get("/:id", verifyToken, (req, res) => {
-    console.log("// /api/users/:id - get")
     user.findById(req.params.id)
     .then(data => {
         data.password = "Nope!"

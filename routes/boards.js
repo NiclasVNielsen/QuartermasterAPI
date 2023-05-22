@@ -3,6 +3,7 @@ const board = require("../models/board")
 const error404 = require("../errors/404")
 const error500 = require("../errors/500")
 const { verifyToken } = require("../validation/token")
+const { verifyBoardToken } = require("../validation/boardToken")
 const mongoose = require("mongoose")
 
 
@@ -34,7 +35,7 @@ router.get("/user/:id", verifyToken, (req, res) => {
 
 //? Read by ID
 // /api/boards/:id - get
-router.get("/:id", verifyToken, (req, res) => {
+router.get("/:id", verifyBoardToken, (req, res) => {
     board.findById(req.params.id)
     .then(data => res.send(data))
     .catch(error => error500(res, error))
@@ -43,10 +44,8 @@ router.get("/:id", verifyToken, (req, res) => {
 
 //? Update
 // /api/boards/:id - put
-router.put("/:id", (req, res) => {
+router.put("/:id", verifyBoardToken, (req, res) => {
     const id = req.params.id
- 
-    console.log(req.params.id)
 
     board.findById(id)
     .then(x => {
@@ -66,7 +65,7 @@ router.put("/:id", (req, res) => {
 
 //? Delete
 // /api/boards/:id - delete
-router.delete("/:id", verifyToken, (req, res) => {
+router.delete("/:id", verifyBoardToken, (req, res) => {
     const id = req.params.id
 
     board.findByIdAndDelete(id)
