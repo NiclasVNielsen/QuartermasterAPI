@@ -17,8 +17,6 @@ const verifyBoardToken = (req, res, next) => {
         if(data.length > 0){
             try {
                 const verified = jwt.verify(token, process.env.TOKEN_SECRET)
-                // if req.params.id => fetch board.members
-                // if board.members contains verified.id
                 req.user = verified
                 next()
             } catch (error) {

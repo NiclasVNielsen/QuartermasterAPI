@@ -4,8 +4,10 @@ info:
   description: MongoDB ExpressJS NodeJS REST API
   version: 1.0.0
 servers:
+  - url: https://quartermasterapi.onrender.com/api/
+    description: Online
   - url: http://localhost:4000/api/
-    description: Localhost development server
+    description: Localhost:4000
 components:
   securitySchemes:
     ApiKeyAuth:        # arbitrary name for the security scheme
@@ -23,26 +25,6 @@ components:
           type: string
         lanes:
           type: object
-
-    Companies:
-      type: object
-      properties:
-        id:
-          type: string
-        projects:
-          type: array
-        employees:
-          type: array
-
-    Projects:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        boards:
-          type: array
     
     User:
       type: object
@@ -108,7 +90,20 @@ paths:
                     type: string
                   data:
                     type: string
-
+  
+  /boards/user:
+    get:
+      summary: Get boards by user id
+      description: Retrieves a list of boards as JSON objects.
+      responses:
+        200:
+          description: A list of boards JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Boards"
 
   /boards:
     get:
@@ -148,6 +143,8 @@ paths:
     get:
       summary: Specific board
       description: Retrieves a specific board based on it id.
+      security:
+        - ApiKeyAuth: []   
       parameters:
         - in: path
           name: id
@@ -212,3 +209,61 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Boards"
+  
+  /users:
+    get:
+      summary: Get all users
+      description: Retrieves a list of users as JSON objects.
+      responses:
+        200:
+          description: A list of users JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  
+    post:
+      summary: Create new User
+      description: Create a new User in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+    
+    update:
+      summary: Update a User
+      description: Update a User in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+
+    delete:
+      summary: Delete a User
+      description: Delete a User in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+  
+  /users/email:
+    get:
+      summary: Get user by email
+      description: Retrieves a user as JSON objects.
+      responses:
+        200:
+          description: A user with specific email JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
